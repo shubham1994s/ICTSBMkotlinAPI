@@ -16,7 +16,7 @@ namespace SwachhBharatAPI.Controllers
 
         // GET: api/users
 
-      //  [Authorize]
+        [Authorize]
         [Route("Login")]
         [HttpPost]
         public SBUser GetLogin(SBUser objlogin)
