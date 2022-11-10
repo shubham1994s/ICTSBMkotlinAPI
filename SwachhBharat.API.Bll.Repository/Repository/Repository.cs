@@ -5842,10 +5842,11 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     else
                     {
                         dump.dyid = null;
-                        dump.startdatetime = Convert.ToDateTime(obj.gcDate);
+
                         dump.enddatetime = Convert.ToDateTime(obj.gcDate);
                         dump.userid = obj.userId;
-                        dump.houselist = obj.houseId;
+                        var phl = db.DumpTripDetails.Where(a=>a.userid==obj.userId && a.tripno==1).Select(a=>a.houselist).FirstOrDefault();
+                        dump.houselist = phl+","+obj.houseId;
                         dump.tripno = 1;
                         db.SaveChanges();
                     }
@@ -6696,7 +6697,19 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 TimeSpan span = TimeSpan.Zero;
                 var dydetails = db.DumpYardDetails.Where(c => c.ReferanceId == obj.dyId).FirstOrDefault();
                 //var dyId = dydetails.dyId; || tdate.AddMinutes(15) >= gcd.gcDate
+                DumpTripDetail objdump = new DumpTripDetail();
 
+                var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startdatetime) == EntityFunctions.TruncateTime(Dateeee) && c.userid == obj.userId).FirstOrDefault();
+                if (dump != null)
+                {
+                    dump.dyid = db.DumpYardDetails.Where(a=>a.ReferanceId==obj.dyId).Select(a=>a.dyId).FirstOrDefault();
+                    dump.enddatetime = Convert.ToDateTime(obj.gcDate);
+                    dump.userid = obj.userId;
+                    var phl = db.DumpTripDetails.Where(a => a.userid == obj.userId && a.tripno == 1).Select(a => a.houselist).FirstOrDefault();
+                   // dump.houselist = phl + "," + obj.houseId;
+                    dump.tripno = 1;
+                    db.SaveChanges();
+                }
                 try
                 {
                     var gcd = db.GarbageCollectionDetails.Where(c => c.userId == obj.userId && c.dyId == dydetails.dyId && EntityFunctions.TruncateTime(c.gcDate) == EntityFunctions.TruncateTime(Dateeee)).OrderByDescending(c => c.gcDate).FirstOrDefault();
