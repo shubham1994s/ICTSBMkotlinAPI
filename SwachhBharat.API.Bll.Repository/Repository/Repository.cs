@@ -5824,6 +5824,31 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 db.Database.Connection.Open();
                 using (var scope = db.Database.BeginTransaction(System.Data.IsolationLevel.Serializable))
                 {
+                    DumpTripDetail objdump = new DumpTripDetail();
+                    DateTime Dateeee = Convert.ToDateTime(obj.gcDate);
+                    var dump = db.DumpTripDetails.Where(c=> EntityFunctions.TruncateTime(c.startdatetime)==EntityFunctions.TruncateTime(Dateeee) && c.userid==obj.userId).FirstOrDefault();
+                    if (dump == null)
+                    {
+                        objdump.dyid = null;
+                        objdump.startdatetime = Convert.ToDateTime(obj.gcDate);
+                        objdump.enddatetime = Convert.ToDateTime(obj.gcDate);
+                        objdump.userid = obj.userId;
+                        objdump.houselist = obj.houseId;
+                        objdump.tripno = 1;
+
+                        db.DumpTripDetails.Add(objdump);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        dump.dyid = null;
+                        dump.startdatetime = Convert.ToDateTime(obj.gcDate);
+                        dump.enddatetime = Convert.ToDateTime(obj.gcDate);
+                        dump.userid = obj.userId;
+                        dump.houselist = obj.houseId;
+                        dump.tripno = 1;
+                        db.SaveChanges();
+                    }
                     string name = "", housemob = "", nameMar = "", addre = "";
                     var house = db.HouseMasters.Where(c => c.ReferanceId == obj.houseId).FirstOrDefault();
                     bool IsExist = false;
@@ -5839,7 +5864,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     {
 
                         //bool IsExist = false;
-                        DateTime Dateeee = Convert.ToDateTime(obj.gcDate);
+                        
                         DateTime startDateTime = new DateTime(Dateeee.Year, Dateeee.Month, Dateeee.Day, 00, 00, 00, 000);
                         DateTime endDateTime = new DateTime(Dateeee.Year, Dateeee.Month, Dateeee.Day, 23, 59, 59, 999);
                         var IsSameHouseRecord = db.GarbageCollectionDetails.Where(c => c.userId == obj.userId && c.houseId == house.houseId && c.gcDate == Dateeee).FirstOrDefault();
@@ -6387,6 +6412,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             return result;
                         }
                     }
+
+                   
                 }
             }
             //}

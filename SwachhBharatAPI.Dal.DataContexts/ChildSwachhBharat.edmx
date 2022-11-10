@@ -556,6 +556,12 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="EmployeeType" Type="varchar" MaxLength="10" />
           <Property Name="imoNo2" Type="nvarchar(max)" />
         </EntityType>
+        <Function Name="BunchListAutoupdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userid" Type="int" Mode="In" />
+          <Parameter Name="RefferanceID" Type="nvarchar" Mode="In" />
+          <Parameter Name="gcdate" Type="date" Mode="In" />
+          <Parameter Name="IsUpdate" Type="bit" Mode="In" />
+        </Function>
         <Function Name="CollecctionArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="type" Type="int" Mode="In" />
         </Function>
@@ -976,12 +982,6 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <FunctionImport Name="VehicleList_TypeWise" ReturnType="Collection(DevSwachhBharatNagpurModel.VehicleList_TypeWise_Result)">
           <Parameter Name="VehicleType" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="BunchListAutoupdate">
-            <Parameter Name="userid" Mode="In" Type="Int32" />
-            <Parameter Name="RefferanceID" Mode="In" Type="String" />
-            <Parameter Name="gcdate" Mode="In" Type="DateTime" />
-            <Parameter Name="IsUpdate" Mode="In" Type="Boolean" />
-          </FunctionImport>
           <FunctionImport Name="SP_UserLatLongDetail" ReturnType="Collection(DevSwachhBharatNagpurModel.SP_UserLatLongDetail_Result)">
             <Parameter Name="userid" Mode="In" Type="Int32" />
             <Parameter Name="typeId" Mode="In" Type="Int32" />
@@ -991,6 +991,12 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <EntitySet Name="HouseMasters" EntityType="DevSwachhBharatNagpurModel.HouseMaster" />
           <EntitySet Name="LiquidWasteDetails" EntityType="DevSwachhBharatNagpurModel.LiquidWasteDetail" />
           <EntitySet Name="StreetSweepingDetails" EntityType="DevSwachhBharatNagpurModel.StreetSweepingDetail" />
+          <FunctionImport Name="BunchListAutoupdate">
+            <Parameter Name="userid" Mode="In" Type="Int32" />
+            <Parameter Name="RefferanceID" Mode="In" Type="String" />
+            <Parameter Name="gcdate" Mode="In" Type="DateTime" />
+            <Parameter Name="IsUpdate" Mode="In" Type="Boolean" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_area_Result">
           <Property Type="String" Name="area" Nullable="true" MaxLength="500" />
@@ -2987,6 +2993,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="BunchListAutoupdate" FunctionName="DevSwachhBharatNagpurModel.Store.BunchListAutoupdate" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
