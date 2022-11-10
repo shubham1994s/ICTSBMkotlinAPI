@@ -25,12 +25,8 @@ namespace SwachhBharatAPI.Controllers
             var id = headerValue1.FirstOrDefault();
             int AppId = int.Parse(id);
 
-            IEnumerable<string> headerValue2 = Request.Headers.GetValues("EmpType");
-            var EmpType = headerValue2.FirstOrDefault();
-
-
             objRep = new Repository();
-            SBUser objresponse = objRep.CheckUserLogin(objlogin.userLoginId, objlogin.userPassword, objlogin.imiNo, AppId,EmpType);
+            SBUser objresponse = objRep.CheckUserLogin(objlogin.userLoginId, objlogin.userPassword, objlogin.imiNo, AppId, objlogin.EmpType);
             return objresponse;
         }
 
