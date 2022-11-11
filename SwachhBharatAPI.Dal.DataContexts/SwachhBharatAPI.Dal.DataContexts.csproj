@@ -134,6 +134,9 @@
     <Compile Include="DeviceDetail.cs">
       <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
     </Compile>
+    <Compile Include="DumpTripDetail.cs">
+      <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
+    </Compile>
     <Compile Include="DumpYardDetail.cs">
       <DependentUpon>ChildSwachhBharat.tt</DependentUpon>
     </Compile>

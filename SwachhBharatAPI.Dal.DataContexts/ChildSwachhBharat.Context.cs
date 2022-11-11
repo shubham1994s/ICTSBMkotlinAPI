@@ -18,9 +18,10 @@ namespace SwachhBharatAPI.Dal.DataContexts
     public partial class DevSwachhBharatNagpurEntities : DbContext
     {
         public DevSwachhBharatNagpurEntities(int AppId)
-              : base(SwachhBharatAppConnection.GetConnectionString(AppId))
+               : base(SwachhBharatAppConnection.GetConnectionString(AppId))
         {
         }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -56,8 +57,9 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public virtual DbSet<Daily_Attendance> Daily_Attendance { get; set; }
         public virtual DbSet<Vehical_QR_Master> Vehical_QR_Master { get; set; }
         public virtual DbSet<Vw_MsgNotification> Vw_MsgNotification { get; set; }
-        public virtual DbSet<HouseMaster> HouseMasters { get; set; }
+        public virtual DbSet<DumpTripDetail> DumpTripDetails { get; set; }
         public virtual DbSet<DumpYardDetail> DumpYardDetails { get; set; }
+        public virtual DbSet<HouseMaster> HouseMasters { get; set; }
         public virtual DbSet<LiquidWasteDetail> LiquidWasteDetails { get; set; }
         public virtual DbSet<StreetSweepingDetail> StreetSweepingDetails { get; set; }
     
@@ -561,6 +563,19 @@ namespace SwachhBharatAPI.Dal.DataContexts
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VehicleList_TypeWise_Result>("VehicleList_TypeWise", vehicleTypeParameter);
         }
     
+        public virtual ObjectResult<SP_UserLatLongDetail_Result> SP_UserLatLongDetail(Nullable<int> userid, Nullable<int> typeId)
+        {
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(int));
+    
+            var typeIdParameter = typeId.HasValue ?
+                new ObjectParameter("typeId", typeId) :
+                new ObjectParameter("typeId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_UserLatLongDetail_Result>("SP_UserLatLongDetail", useridParameter, typeIdParameter);
+        }
+    
         public virtual int BunchListAutoupdate(Nullable<int> userid, string refferanceID, Nullable<System.DateTime> gcdate, Nullable<bool> isUpdate)
         {
             var useridParameter = userid.HasValue ?
@@ -580,19 +595,6 @@ namespace SwachhBharatAPI.Dal.DataContexts
                 new ObjectParameter("IsUpdate", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BunchListAutoupdate", useridParameter, refferanceIDParameter, gcdateParameter, isUpdateParameter);
-        }
-    
-        public virtual ObjectResult<SP_UserLatLongDetail_Result> SP_UserLatLongDetail(Nullable<int> userid, Nullable<int> typeId)
-        {
-            var useridParameter = userid.HasValue ?
-                new ObjectParameter("userid", userid) :
-                new ObjectParameter("userid", typeof(int));
-    
-            var typeIdParameter = typeId.HasValue ?
-                new ObjectParameter("typeId", typeId) :
-                new ObjectParameter("typeId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_UserLatLongDetail_Result>("SP_UserLatLongDetail", useridParameter, typeIdParameter);
         }
     }
 }
