@@ -23,19 +23,12 @@ namespace SwachhBharatAPI.Controllers
             objRep = new Repository();
             IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
             IEnumerable<string> headervalue2 = Request.Headers.GetValues("userId");
-            //IEnumerable<string> headervalue3 = Request.Headers.GetValues("typeId");
-
-            //var token= "";
-            //if (System.Web.HttpContext.Current.Request.Headers["typeId"] == null)
-            //{
-            //     token = '0'.ToString();
-            //}
-
             var token = Request.Headers.Contains("typeId") ? Request.Headers.GetValues("typeId").First() : null;
             if (token == null)
             {
                 token = '0'.ToString();
             }
+
             var id = headerValue1.FirstOrDefault();
             int AppId = int.Parse(id);
             var user = headervalue2.FirstOrDefault();
