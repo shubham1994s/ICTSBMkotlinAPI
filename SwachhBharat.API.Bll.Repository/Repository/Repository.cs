@@ -5826,7 +5826,19 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 {
                     DumpTripDetail objdump = new DumpTripDetail();
                     DateTime Dateeee = Convert.ToDateTime(obj.gcDate);
-                    var dump = db.DumpTripDetails.Where(c=> EntityFunctions.TruncateTime(c.startdatetime)==EntityFunctions.TruncateTime(Dateeee) && c.userid==obj.userId).FirstOrDefault();
+                    var dump = db.DumpTripDetails.Where(c=> EntityFunctions.TruncateTime(c.startdatetime)==EntityFunctions.TruncateTime(Dateeee) && c.userid==obj.userId && c.dyid==null).FirstOrDefault();
+                    var dumpExist= db.DumpTripDetails.OrderByDescending(x => x.tripid).Where(c => EntityFunctions.TruncateTime(c.startdatetime) == EntityFunctions.TruncateTime(Dateeee) && c.userid == obj.userId && c.dyid != null).FirstOrDefault();
+                    
+                    int TrpNo=0;
+                    if (dumpExist == null)
+                    {
+                        TrpNo = 1;
+                    }
+                    else
+                    {
+                        TrpNo = (Convert.ToInt32(dumpExist.tripno) + 1);
+                    }
+                    
                     if (dump == null)
                     {
                         objdump.dyid = null;
@@ -5834,7 +5846,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         objdump.enddatetime = Convert.ToDateTime(obj.gcDate);
                         objdump.userid = obj.userId;
                         objdump.houselist = obj.houseId;
-                        objdump.tripno = 1;
+                        objdump.tripno = TrpNo;
 
                         db.DumpTripDetails.Add(objdump);
                         db.SaveChanges();
@@ -5845,9 +5857,9 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                         dump.enddatetime = Convert.ToDateTime(obj.gcDate);
                         dump.userid = obj.userId;
-                        var phl = db.DumpTripDetails.Where(a=>a.userid==obj.userId && a.tripno==1).Select(a=>a.houselist).FirstOrDefault();
+                        var phl = db.DumpTripDetails.Where(a=>a.userid==obj.userId && a.tripno== TrpNo && a.dyid==null).Select(a=>a.houselist).FirstOrDefault();
                         dump.houselist = phl+","+obj.houseId;
-                        dump.tripno = 1;
+                        dump.tripno = TrpNo;
                         db.SaveChanges();
                     }
                     string name = "", housemob = "", nameMar = "", addre = "";
@@ -6699,15 +6711,27 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 //var dyId = dydetails.dyId; || tdate.AddMinutes(15) >= gcd.gcDate
                 DumpTripDetail objdump = new DumpTripDetail();
 
-                var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startdatetime) == EntityFunctions.TruncateTime(Dateeee) && c.userid == obj.userId).FirstOrDefault();
+                //var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startdatetime) == EntityFunctions.TruncateTime(Dateeee) && c.userid == obj.userId).FirstOrDefault();
+                var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startdatetime) == EntityFunctions.TruncateTime(Dateeee) && c.userid == obj.userId && c.dyid == null).FirstOrDefault();
+                var dumpExist = db.DumpTripDetails.OrderByDescending(x=>x.tripid).Where(c => EntityFunctions.TruncateTime(c.startdatetime) == EntityFunctions.TruncateTime(Dateeee) && c.userid == obj.userId && c.dyid != null).FirstOrDefault();
+                int TrpNo = 0;
+                if (dumpExist == null)
+                {
+                    TrpNo = 1;
+                }
+                else
+                {
+                    TrpNo = (Convert.ToInt32(dumpExist.tripno) + 1);
+                }
+
                 if (dump != null)
                 {
                     dump.dyid = db.DumpYardDetails.Where(a=>a.ReferanceId==obj.dyId).Select(a=>a.dyId).FirstOrDefault();
                     dump.enddatetime = Convert.ToDateTime(obj.gcDate);
                     dump.userid = obj.userId;
-                    var phl = db.DumpTripDetails.Where(a => a.userid == obj.userId && a.tripno == 1).Select(a => a.houselist).FirstOrDefault();
+                    var phl = db.DumpTripDetails.Where(a => a.userid == obj.userId && a.tripno == TrpNo && a.dyid==null).Select(a => a.houselist).FirstOrDefault();
                    // dump.houselist = phl + "," + obj.houseId;
-                    dump.tripno = 1;
+                    dump.tripno = TrpNo;
                     db.SaveChanges();
                 }
                 try
