@@ -5847,7 +5847,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         objdump.userid = obj.userId;
                         objdump.houselist = obj.houseId;
                         objdump.tripno = TrpNo;
-
+                        Guid guid = Guid.NewGuid();
+                        var gid= guid.ToString();
                         db.DumpTripDetails.Add(objdump);
                         db.SaveChanges();
                     }
@@ -5858,7 +5859,13 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         dump.enddatetime = Convert.ToDateTime(obj.gcDate);
                         dump.userid = obj.userId;
                         var phl = db.DumpTripDetails.Where(a=>a.userid==obj.userId && a.tripno== TrpNo && a.dyid==null).Select(a=>a.houselist).FirstOrDefault();
+                       
+                        var tripid = db.DumpTripDetails.OrderByDescending(a=>a.tripid).Where(a=>a.userid==obj.userId).FirstOrDefault().tripid;
+                        var data = db.DumpTripDetails.Where(a => a.houselist.Contains(obj.houseId) && a.tripid == tripid).FirstOrDefault();
+                        if(data==null)
+                        { 
                         dump.houselist = phl+","+obj.houseId;
+                        }
                         dump.tripno = TrpNo;
                         db.SaveChanges();
                     }
