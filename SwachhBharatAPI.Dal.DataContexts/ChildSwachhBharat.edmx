@@ -63,9 +63,13 @@
           <Property Name="startdatetime" Type="datetime" />
           <Property Name="enddatetime" Type="datetime" />
           <Property Name="userid" Type="int" />
-          <Property Name="dyid" Type="int" />
+          <Property Name="dyid" Type="nvarchar" MaxLength="100" />
           <Property Name="houselist" Type="nvarchar(max)" />
           <Property Name="tripno" Type="int" />
+          <Property Name="vehicleNumber" Type="nvarchar" MaxLength="100" />
+          <Property Name="totalGcWeight" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="totalDryWeight" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="totalWetWeight" Type="decimal" Precision="18" Scale="4" />
         </EntityType>
         <EntityType Name="DumpYardDetails">
           <Key>
@@ -986,7 +990,6 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
             <Parameter Name="userid" Mode="In" Type="Int32" />
             <Parameter Name="typeId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="DumpTripDetails" EntityType="DevSwachhBharatNagpurModel.DumpTripDetail" />
           <EntitySet Name="DumpYardDetails" EntityType="DevSwachhBharatNagpurModel.DumpYardDetail" />
           <EntitySet Name="HouseMasters" EntityType="DevSwachhBharatNagpurModel.HouseMaster" />
           <EntitySet Name="LiquidWasteDetails" EntityType="DevSwachhBharatNagpurModel.LiquidWasteDetail" />
@@ -997,6 +1000,7 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
             <Parameter Name="gcdate" Mode="In" Type="DateTime" />
             <Parameter Name="IsUpdate" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <EntitySet Name="DumpTripDetails" EntityType="DevSwachhBharatNagpurModel.DumpTripDetail" />
         </EntityContainer>
         <ComplexType Name="sp_area_Result">
           <Property Type="String" Name="area" Nullable="true" MaxLength="500" />
@@ -1800,18 +1804,6 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Type="String" Name="batteryStatus" Nullable="true" MaxLength="20" />
           <Property Type="Decimal" Name="Distnace" Nullable="true" Precision="6" Scale="2" />
         </ComplexType>
-        <EntityType Name="DumpTripDetail">
-          <Key>
-            <PropertyRef Name="tripid" />
-          </Key>
-          <Property Name="tripid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="startdatetime" Type="DateTime" Precision="3" />
-          <Property Name="enddatetime" Type="DateTime" Precision="3" />
-          <Property Name="userid" Type="Int32" />
-          <Property Name="dyid" Type="Int32" />
-          <Property Name="houselist" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="tripno" Type="Int32" />
-        </EntityType>
         <EntityType Name="DumpYardDetail">
           <Key>
             <PropertyRef Name="dyId" />
@@ -1911,6 +1903,22 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
           <Property Name="QRStatusDate" Type="DateTime" Precision="3" />
           <Property Name="BinaryQrCodeImage" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="DataEntryDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="DumpTripDetail">
+          <Key>
+            <PropertyRef Name="tripid" />
+          </Key>
+          <Property Name="tripid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="startdatetime" Type="DateTime" Precision="3" />
+          <Property Name="enddatetime" Type="DateTime" Precision="3" />
+          <Property Name="userid" Type="Int32" />
+          <Property Name="dyid" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="houselist" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="tripno" Type="Int32" />
+          <Property Name="vehicleNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="totalGcWeight" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="totalDryWeight" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="totalWetWeight" Type="Decimal" Precision="18" Scale="4" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2876,19 +2884,6 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="DumpTripDetails">
-            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.DumpTripDetail">
-              <MappingFragment StoreEntitySet="DumpTripDetails">
-                <ScalarProperty Name="tripno" ColumnName="tripno" />
-                <ScalarProperty Name="houselist" ColumnName="houselist" />
-                <ScalarProperty Name="dyid" ColumnName="dyid" />
-                <ScalarProperty Name="userid" ColumnName="userid" />
-                <ScalarProperty Name="enddatetime" ColumnName="enddatetime" />
-                <ScalarProperty Name="startdatetime" ColumnName="startdatetime" />
-                <ScalarProperty Name="tripid" ColumnName="tripid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DumpYardDetails">
             <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.DumpYardDetail">
               <MappingFragment StoreEntitySet="DumpYardDetails">
@@ -2994,6 +2989,23 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="BunchListAutoupdate" FunctionName="DevSwachhBharatNagpurModel.Store.BunchListAutoupdate" />
+          <EntitySetMapping Name="DumpTripDetails">
+            <EntityTypeMapping TypeName="DevSwachhBharatNagpurModel.DumpTripDetail">
+              <MappingFragment StoreEntitySet="DumpTripDetails">
+                <ScalarProperty Name="totalWetWeight" ColumnName="totalWetWeight" />
+                <ScalarProperty Name="totalDryWeight" ColumnName="totalDryWeight" />
+                <ScalarProperty Name="totalGcWeight" ColumnName="totalGcWeight" />
+                <ScalarProperty Name="vehicleNumber" ColumnName="vehicleNumber" />
+                <ScalarProperty Name="tripno" ColumnName="tripno" />
+                <ScalarProperty Name="houselist" ColumnName="houselist" />
+                <ScalarProperty Name="dyid" ColumnName="dyid" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="enddatetime" ColumnName="enddatetime" />
+                <ScalarProperty Name="startdatetime" ColumnName="startdatetime" />
+                <ScalarProperty Name="tripid" ColumnName="tripid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

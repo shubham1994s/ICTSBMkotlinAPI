@@ -20,12 +20,12 @@ namespace SwachhBharatAPI.Controllers
     public class GarbageCollectionController : ApiController
     {
         IRepository _RepositoryApi;
-        DevSwachhBharatMainEntities dbMain = new DevSwachhBharatMainEntities();       
+        DevSwachhBharatMainEntities dbMain = new DevSwachhBharatMainEntities();
         [HttpPost]
         [Route("Save/GarbageCollection")]
         public async Task<CollectionResult> MediaUpload1()
         {
-            
+
             _RepositoryApi = new Repository();
             SBGarbageCollectionView gcDetail = new SBGarbageCollectionView();
             CollectionResult objres = new CollectionResult();
@@ -41,7 +41,7 @@ namespace SwachhBharatAPI.Controllers
                 string imagePath, FileName;
 
                 var AppId = Convert.ToInt32(headerValue1.FirstOrDefault());
-        
+
                 var objmain = dbMain.AppDetails.Where(x => x.AppId == AppId).FirstOrDefault();
                 var AppDetailURL = objmain.baseImageUrl + objmain.basePath + objmain.Collection + "/";
 
@@ -100,27 +100,29 @@ namespace SwachhBharatAPI.Controllers
                 string Filepath = Source;
 
 
-                gcDetail.userId = int.Parse(formData["userId"]);               
+                gcDetail.userId = int.Parse(formData["userId"]);
                 if (formData["houseId"] == null)
                 {
                     gcDetail.houseId = "";
                 }
-                else {
+                else
+                {
                     gcDetail.houseId = formData["houseId"];
                     gcDetail.gcType = 1;
                 }
-                if (formData["gpId"] ==null)
+                if (formData["gpId"] == null)
                 {
                     gcDetail.gpId = "";
                 }
-                else {
+                else
+                {
                     gcDetail.gpId = formData["gpId"];
                     gcDetail.gcType = 2;
-                }               
+                }
                 gcDetail.Lat = formData["Lat"];
                 gcDetail.Long = formData["Long"];
                 gcDetail.note = formData["note"];
-                gcDetail.garbageType =Convert.ToInt32( formData["garbageType"]);
+                gcDetail.garbageType = Convert.ToInt32(formData["garbageType"]);
                 gcDetail.vehicleNumber = formData["vehicleNumber"];
                 // gcDetail.gcDate = Convert.ToString(formData["gcDate"]);             
                 string imageStart = "", imageEnd = "";
@@ -130,17 +132,17 @@ namespace SwachhBharatAPI.Controllers
                 if (impath.Length == 0 || impath[0] == null)
                 {
                     gcDetail.gpBeforImage = "";
-                    gcDetail.gpAfterImage = "";                    
+                    gcDetail.gpAfterImage = "";
                 }
                 else
                 {
                     if (imageStart == "" || imageStart == string.Empty || imageStart == null)
                     {
-                       gcDetail.gpBeforImage = "";
+                        gcDetail.gpBeforImage = "";
                         if (imageEnd != "" || imageEnd != string.Empty || imageEnd != null)
 
                         {
-                            gcDetail.gpAfterImage= impath[0];
+                            gcDetail.gpAfterImage = impath[0];
                         }
                     }
                     else
@@ -150,7 +152,7 @@ namespace SwachhBharatAPI.Controllers
 
                         if (impath.Length == 0 || i <= 1)
                         {
-                            gcDetail.gpAfterImage= "";
+                            gcDetail.gpAfterImage = "";
                         }
                         else
                         {
@@ -162,7 +164,7 @@ namespace SwachhBharatAPI.Controllers
                         }
                     }
                 }
-                CollectionResult detail = _RepositoryApi.SaveGarbageCollection(gcDetail,AppId,0, batteryStatus);
+                CollectionResult detail = _RepositoryApi.SaveGarbageCollection(gcDetail, AppId, 0, batteryStatus);
                 if (detail.message == "")
                 {
                     objres.name = "";
@@ -202,16 +204,16 @@ namespace SwachhBharatAPI.Controllers
         [Route("Get/GarbageCollection")]
         //api/BookATable/GetBookAtableList
         public List<SBGarbageCollectionView> GetComplaintType()
-            {
+        {
             _RepositoryApi = new Repository();
             IEnumerable<string> headerValue1 = Request.Headers.GetValues("appId");
             IEnumerable<string> headerValue2 = Request.Headers.GetValues("fdate");
             var id = headerValue1.FirstOrDefault();
             int AppId = int.Parse(id);
-            var date= headerValue2.FirstOrDefault();
+            var date = headerValue2.FirstOrDefault();
             DateTime fdate = Convert.ToDateTime(date);
             List<SBGarbageCollectionView> objDetail = new List<SBGarbageCollectionView>();
-            objDetail = _RepositoryApi.GetGarbageCollection(fdate,AppId);
+            objDetail = _RepositoryApi.GetGarbageCollection(fdate, AppId);
             return objDetail;
         }
 
@@ -233,8 +235,8 @@ namespace SwachhBharatAPI.Controllers
             int _typeId = 0;
 
 
-          //  string[] impath = new string[2];
-          //  string[] arr = new string[4];
+            //  string[] impath = new string[2];
+            //  string[] arr = new string[4];
             int i = 0;
             try
             {
@@ -246,8 +248,8 @@ namespace SwachhBharatAPI.Controllers
                 var AppDetailURL = objmain.baseImageUrl + objmain.basePath + objmain.Collection + "/";
 
 
-              //  TimeSpan start = new TimeSpan(15, 0, 0);
-              //  TimeSpan end = new TimeSpan(16, 0, 0);
+                //  TimeSpan start = new TimeSpan(15, 0, 0);
+                //  TimeSpan end = new TimeSpan(16, 0, 0);
                 string hour = DateTime.Now.ToString("hh:mm tt");
 
                 DateTime scheduledRun = DateTime.Today.AddHours(15);
@@ -275,9 +277,9 @@ namespace SwachhBharatAPI.Controllers
                             string houseid1 = item.ReferenceID;
                             string[] houseList = houseid1.Split(',');
                             gcDetail.houseId = houseList[0];
-                            if(houseList.Length>1)
-                            { 
-                            gcDetail.wastetype = houseList[1];
+                            if (houseList.Length > 1)
+                            {
+                                gcDetail.wastetype = houseList[1];
                             }
                             //   gcDetail.houseId = item.ReferenceID;
                             gcDetail.gcType = item.gcType;
@@ -328,24 +330,24 @@ namespace SwachhBharatAPI.Controllers
                     }
 
                     gcDetail.OfflineID = item.OfflineID;
-                    gcDetail.Lat = item.Lat;  
-                    gcDetail.Long = item.Long;  
-                    gcDetail.note = item.note;  
-                    gcDetail.garbageType = item.garbageType; 
-                    gcDetail.vehicleNumber = item.vehicleNumber;  
+                    gcDetail.Lat = item.Lat;
+                    gcDetail.Long = item.Long;
+                    gcDetail.note = item.note;
+                    gcDetail.garbageType = item.garbageType;
+                    gcDetail.vehicleNumber = item.vehicleNumber;
                     gcDetail.gcDate = item.gcDate;
                     gcDetail.batteryStatus = item.batteryStatus;
                     gcDetail.Distance = item.Distance;
                     gcDetail.IsLocation = item.IsLocation;
                     gcDetail.IsOffline = item.IsOffline;
-                   
+
 
                     string imageStart = "", imageEnd = "";
-                    imageStart = item.gpBeforImage; 
+                    imageStart = item.gpBeforImage;
                     imageEnd = item.gpAfterImage;
                     gcDetail.gpBeforImage = imageStart;
                     gcDetail.gpAfterImage = imageEnd;
-                    
+
                     //string Image = "";
                     //if (impath.Length == 0 || impath[0] == null)
                     //{
@@ -381,19 +383,20 @@ namespace SwachhBharatAPI.Controllers
                     //        }
                     //    }
                     //}
-                
 
-                    CollectionSyncResult detail =  _RepositoryApi.SaveGarbageCollectionOffline(gcDetail, AppId, _typeId);
 
-                  
+                    CollectionSyncResult detail = _RepositoryApi.SaveGarbageCollectionOffline(gcDetail, AppId, _typeId);
+
+
                     if (detail.message == "")
                     {
-                        objres.Add(new CollectionSyncResult() {
+                        objres.Add(new CollectionSyncResult()
+                        {
                             ID = detail.ID,
                             status = "error",
                             message = "Record not inserted",
                             messageMar = "रेकॉर्ड सबमिट केले नाही"
-                           });
+                        });
                     }
 
                     objres.Add(new CollectionSyncResult()
@@ -402,7 +405,18 @@ namespace SwachhBharatAPI.Controllers
                         status = detail.status,
                         messageMar = detail.messageMar,
                         message = detail.message,
-                        isAttendenceOff= detail.isAttendenceOff
+                        isAttendenceOff = detail.isAttendenceOff,
+                        totalDryWeight = detail.totalDryWeight,
+                        totalWetWeight = detail.totalWetWeight,
+                        totalGcWeight = detail.totalGcWeight,
+                        tripno = detail.tripno,
+                        userid = detail.userid,
+                        houselist = detail.houselist,
+                        dyid = detail.dyid,
+                        vehicleNumber = detail.vehicleNumber,
+                        startdatetime = detail.startdatetime,
+                        enddatetime = detail.enddatetime
+
                     });
                 }
 

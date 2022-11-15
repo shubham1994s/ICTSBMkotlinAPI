@@ -18,8 +18,12 @@ namespace SwachhBharatAPI.Dal.DataContexts
         public Nullable<System.DateTime> startdatetime { get; set; }
         public Nullable<System.DateTime> enddatetime { get; set; }
         public Nullable<int> userid { get; set; }
-        public Nullable<int> dyid { get; set; }
+        public string dyid { get; set; }
         public string houselist { get; set; }
         public Nullable<int> tripno { get; set; }
+        public string vehicleNumber { get; set; }
+        public Nullable<decimal> totalGcWeight { get; set; }
+        public Nullable<decimal> totalDryWeight { get; set; }
+        public Nullable<decimal> totalWetWeight { get; set; }
     }
 }

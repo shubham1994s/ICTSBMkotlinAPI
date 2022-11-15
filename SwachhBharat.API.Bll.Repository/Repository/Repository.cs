@@ -5847,6 +5847,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         objdump.userid = obj.userId;
                         objdump.houselist = obj.houseId;
                         objdump.tripno = TrpNo;
+                        objdump.vehicleNumber = obj.vehicleNumber;
                         Guid guid = Guid.NewGuid();
                         var gid= guid.ToString();
                         db.DumpTripDetails.Add(objdump);
@@ -5858,7 +5859,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                         dump.enddatetime = Convert.ToDateTime(obj.gcDate);
                         dump.userid = obj.userId;
-                        var phl = db.DumpTripDetails.Where(a=>a.userid==obj.userId && a.tripno== TrpNo && a.dyid==null).Select(a=>a.houselist).FirstOrDefault();
+                        var phl = db.DumpTripDetails.Where(a=>a.userid==obj.userId && a.tripno== TrpNo && a.dyid==null && EntityFunctions.TruncateTime(a.startdatetime) == EntityFunctions.TruncateTime(Dateeee)).Select(a=>a.houselist).FirstOrDefault();
                        
                         var tripid = db.DumpTripDetails.OrderByDescending(a=>a.tripid).Where(a=>a.userid==obj.userId).FirstOrDefault().tripid;
                         var data = db.DumpTripDetails.Where(a => a.houselist.Contains(obj.houseId) && a.tripid == tripid).FirstOrDefault();
@@ -5866,6 +5867,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         { 
                         dump.houselist = phl+","+obj.houseId;
                         }
+                        dump.vehicleNumber = obj.vehicleNumber;
                         dump.tripno = TrpNo;
                         db.SaveChanges();
                     }
@@ -6722,6 +6724,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startdatetime) == EntityFunctions.TruncateTime(Dateeee) && c.userid == obj.userId && c.dyid == null).FirstOrDefault();
                 var dumpExist = db.DumpTripDetails.OrderByDescending(x=>x.tripid).Where(c => EntityFunctions.TruncateTime(c.startdatetime) == EntityFunctions.TruncateTime(Dateeee) && c.userid == obj.userId && c.dyid != null).FirstOrDefault();
                 int TrpNo = 0;
+                string hlist = "", sdate = "";
                 if (dumpExist == null)
                 {
                     TrpNo = 1;
@@ -6729,15 +6732,31 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 else
                 {
                     TrpNo = (Convert.ToInt32(dumpExist.tripno) + 1);
-                }
+                    if(dumpExist.dyid!=null)
+                    {
+                        //TrpNo = Convert.ToInt32(dumpExist.tripno);
 
+                        hlist = dumpExist.houselist;
+                    }
+                    if (dump != null)
+                    {
+                        var phl = db.DumpTripDetails.OrderByDescending(x => x.tripid).Where(a => a.userid == obj.userId && a.tripno == TrpNo && a.dyid == null).Select(a => a.houselist).FirstOrDefault();
+                        // dump.houselist = phl + "," + obj.houseId;
+                        hlist = phl;
+                    }
+                }
+                
+               
                 if (dump != null)
                 {
-                    dump.dyid = db.DumpYardDetails.Where(a=>a.ReferanceId==obj.dyId).Select(a=>a.dyId).FirstOrDefault();
+                    dump.dyid = db.DumpYardDetails.Where(a=>a.ReferanceId==obj.dyId).Select(a=>a.ReferanceId).FirstOrDefault();
                     dump.enddatetime = Convert.ToDateTime(obj.gcDate);
                     dump.userid = obj.userId;
-                    var phl = db.DumpTripDetails.Where(a => a.userid == obj.userId && a.tripno == TrpNo && a.dyid==null).Select(a => a.houselist).FirstOrDefault();
-                   // dump.houselist = phl + "," + obj.houseId;
+                  
+                  
+                    dump.totalDryWeight = obj.totalDryWeight;
+                    dump.totalWetWeight = obj.totalWetWeight;
+                    dump.totalGcWeight = obj.totalGcWeight;
                     dump.tripno = TrpNo;
                     db.SaveChanges();
                 }
@@ -6792,6 +6811,16 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                     result.status = "success";
                                     result.message = "Uploaded successfully";
                                     result.messageMar = "सबमिट यशस्वी";
+                                    result.totalDryWeight = obj.totalDryWeight;
+                                    result.totalWetWeight = obj.totalWetWeight;
+                                    result.totalGcWeight = obj.totalGcWeight;
+                                    result.tripno= TrpNo;
+                                    result.userid = obj.userId;
+                                    result.houselist = hlist;
+                                    result.dyid = obj.dyId;
+                                    result.vehicleNumber = obj.vehicleNumber;
+                                    result.startdatetime = dumpExist.startdatetime;
+                                    result.enddatetime = Convert.ToDateTime(obj.gcDate);
                                     return result;
                                 }
                             }
@@ -6867,6 +6896,17 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         result.status = "success";
                         result.message = "Uploaded successfully";
                         result.messageMar = "सबमिट यशस्वी";
+                        result.totalDryWeight = obj.totalDryWeight;
+                        result.totalWetWeight = obj.totalWetWeight;
+                        result.totalGcWeight = obj.totalGcWeight;
+                        result.tripno = TrpNo;
+                        result.userid = obj.userId;
+                        result.houselist = hlist;
+                        result.dyid = obj.dyId;
+                        result.vehicleNumber = obj.vehicleNumber;
+                        result.startdatetime = dumpExist.startdatetime;
+                        result.enddatetime = Convert.ToDateTime(obj.gcDate);
+
                         //string mes = "नमस्कार! आपल्या घरून कचरा संकलित करण्यात आलेला आहे. कृपया ओला व सुका असा वर्गीकृत केलेला कचरा सफाई कर्मचाऱ्यास सुपूर्द करून सहकार्य करावे धन्यवाद. " + appdetails.yoccContact + " आपल्या सेवेशी " + appdetails.AppName_mar + "";
                         //if (housemob != "")
                         //{
@@ -6985,6 +7025,16 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         result.status = "success";
                         result.message = "Uploaded successfully";
                         result.messageMar = "सबमिट यशस्वी";
+                        result.totalDryWeight = obj.totalDryWeight;
+                        result.totalWetWeight = obj.totalWetWeight;
+                        result.totalGcWeight = obj.totalGcWeight;
+                        result.tripno = TrpNo;
+                        result.userid = obj.userId;
+                        result.houselist = hlist;
+                        result.dyid = obj.dyId;
+                        result.vehicleNumber = obj.vehicleNumber;
+                        result.startdatetime = dumpExist.startdatetime;
+                        result.enddatetime = Convert.ToDateTime(obj.gcDate);
 
                         //string mes = "नमस्कार! आपल्या घरून कचरा संकलित करण्यात आलेला आहे. कृपया ओला व सुका असा वर्गीकृत केलेला कचरा सफाई कर्मचाऱ्यास सुपूर्द करून सहकार्य करावे धन्यवाद. " + appdetails.yoccContact + " आपल्या सेवेशी " + appdetails.AppName_mar + "";
                         //if (housemob != "")
