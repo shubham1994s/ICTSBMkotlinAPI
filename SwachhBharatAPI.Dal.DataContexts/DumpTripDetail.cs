@@ -14,13 +14,14 @@ namespace SwachhBharatAPI.Dal.DataContexts
     
     public partial class DumpTripDetail
     {
-        public int tripid { get; set; }
-        public Nullable<System.DateTime> startdatetime { get; set; }
-        public Nullable<System.DateTime> enddatetime { get; set; }
-        public Nullable<int> userid { get; set; }
-        public string dyid { get; set; }
-        public string houselist { get; set; }
-        public Nullable<int> tripno { get; set; }
+        public int tripId { get; set; }
+        public string transId { get; set; }
+        public Nullable<System.DateTime> startDateTime { get; set; }
+        public Nullable<System.DateTime> endDateTime { get; set; }
+        public Nullable<int> userId { get; set; }
+        public string dyId { get; set; }
+        public string houseList { get; set; }
+        public Nullable<int> tripNo { get; set; }
         public string vehicleNumber { get; set; }
         public Nullable<decimal> totalGcWeight { get; set; }
         public Nullable<decimal> totalDryWeight { get; set; }

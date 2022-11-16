@@ -5826,8 +5826,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 {
                     DumpTripDetail objdump = new DumpTripDetail();
                     DateTime Dateeee = Convert.ToDateTime(obj.gcDate);
-                    var dump = db.DumpTripDetails.Where(c=> EntityFunctions.TruncateTime(c.startdatetime)==EntityFunctions.TruncateTime(Dateeee) && c.userid==obj.userId && c.dyid==null).FirstOrDefault();
-                    var dumpExist= db.DumpTripDetails.OrderByDescending(x => x.tripid).Where(c => EntityFunctions.TruncateTime(c.startdatetime) == EntityFunctions.TruncateTime(Dateeee) && c.userid == obj.userId && c.dyid != null).FirstOrDefault();
+                    var dump = db.DumpTripDetails.Where(c=> EntityFunctions.TruncateTime(c.startDateTime)==EntityFunctions.TruncateTime(Dateeee) && c.userId==obj.userId && c.dyId ==null).FirstOrDefault();
+                    var dumpExist= db.DumpTripDetails.OrderByDescending(x => x.tripId).Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId != null).FirstOrDefault();
                     
                     int TrpNo=0;
                     if (dumpExist == null)
@@ -5836,17 +5836,17 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     }
                     else
                     {
-                        TrpNo = (Convert.ToInt32(dumpExist.tripno) + 1);
+                        TrpNo = (Convert.ToInt32(dumpExist.tripNo) + 1);
                     }
                     
                     if (dump == null)
                     {
-                        objdump.dyid = null;
-                        objdump.startdatetime = Convert.ToDateTime(obj.gcDate);
-                        objdump.enddatetime = Convert.ToDateTime(obj.gcDate);
-                        objdump.userid = obj.userId;
-                        objdump.houselist = obj.houseId;
-                        objdump.tripno = TrpNo;
+                        objdump.dyId = null;
+                        objdump.startDateTime = Convert.ToDateTime(obj.gcDate);
+                        objdump.endDateTime = Convert.ToDateTime(obj.gcDate);
+                        objdump.userId = obj.userId;
+                        objdump.houseList = obj.houseId;
+                        objdump.tripNo = TrpNo;
                         objdump.vehicleNumber = obj.vehicleNumber;
                         Guid guid = Guid.NewGuid();
                         var gid= guid.ToString();
@@ -5855,20 +5855,20 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     }
                     else
                     {
-                        dump.dyid = null;
+                        dump.dyId = null;
 
-                        dump.enddatetime = Convert.ToDateTime(obj.gcDate);
-                        dump.userid = obj.userId;
-                        var phl = db.DumpTripDetails.Where(a=>a.userid==obj.userId && a.tripno== TrpNo && a.dyid==null && EntityFunctions.TruncateTime(a.startdatetime) == EntityFunctions.TruncateTime(Dateeee)).Select(a=>a.houselist).FirstOrDefault();
+                        dump.endDateTime = Convert.ToDateTime(obj.gcDate);
+                        dump.userId = obj.userId;
+                        var phl = db.DumpTripDetails.Where(a=>a.userId==obj.userId && a.tripNo== TrpNo && a.dyId==null && EntityFunctions.TruncateTime(a.startDateTime) == EntityFunctions.TruncateTime(Dateeee)).Select(a=>a.houseList).FirstOrDefault();
                        
-                        var tripid = db.DumpTripDetails.OrderByDescending(a=>a.tripid).Where(a=>a.userid==obj.userId).FirstOrDefault().tripid;
-                        var data = db.DumpTripDetails.Where(a => a.houselist.Contains(obj.houseId) && a.tripid == tripid).FirstOrDefault();
+                        var tripid = db.DumpTripDetails.OrderByDescending(a=>a.tripId).Where(a=>a.userId==obj.userId).FirstOrDefault().tripId;
+                        var data = db.DumpTripDetails.Where(a => a.houseList.Contains(obj.houseId) && a.tripId == tripid).FirstOrDefault();
                         if(data==null)
                         { 
-                        dump.houselist = phl+","+obj.houseId;
+                        dump.houseList = phl+","+obj.houseId;
                         }
                         dump.vehicleNumber = obj.vehicleNumber;
-                        dump.tripno = TrpNo;
+                        dump.tripNo = TrpNo;
                         db.SaveChanges();
                     }
                     string name = "", housemob = "", nameMar = "", addre = "";
@@ -6721,8 +6721,8 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 DumpTripDetail objdump = new DumpTripDetail();
 
                 //var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startdatetime) == EntityFunctions.TruncateTime(Dateeee) && c.userid == obj.userId).FirstOrDefault();
-                var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startdatetime) == EntityFunctions.TruncateTime(Dateeee) && c.userid == obj.userId && c.dyid == null).FirstOrDefault();
-                var dumpExist = db.DumpTripDetails.OrderByDescending(x=>x.tripid).Where(c => EntityFunctions.TruncateTime(c.startdatetime) == EntityFunctions.TruncateTime(Dateeee) && c.userid == obj.userId && c.dyid != null).FirstOrDefault();
+                var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId == null).FirstOrDefault();
+                var dumpExist = db.DumpTripDetails.OrderByDescending(x=>x.tripId).Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId != null).FirstOrDefault();
                 int TrpNo = 0;
                 string hlist = "", sdate = "";
                 if (dumpExist == null)
@@ -6731,33 +6731,34 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 }
                 else
                 {
-                    TrpNo = (Convert.ToInt32(dumpExist.tripno) + 1);
-                    if(dumpExist.dyid!=null)
+                    TrpNo = (Convert.ToInt32(dumpExist.tripNo) + 1);
+                    if(dumpExist.dyId!=null)
                     {
-                        //TrpNo = Convert.ToInt32(dumpExist.tripno);
+                        TrpNo = Convert.ToInt32(dumpExist.tripNo);
 
-                        hlist = dumpExist.houselist;
+                        hlist = dumpExist.houseList;
                     }
                     if (dump != null)
                     {
-                        var phl = db.DumpTripDetails.OrderByDescending(x => x.tripid).Where(a => a.userid == obj.userId && a.tripno == TrpNo && a.dyid == null).Select(a => a.houselist).FirstOrDefault();
+                        var phl = db.DumpTripDetails.OrderByDescending(x => x.tripId).Where(a => a.userId == obj.userId && a.tripNo == TrpNo && a.dyId == null).Select(a => a.houseList).FirstOrDefault();
                         // dump.houselist = phl + "," + obj.houseId;
                         hlist = phl;
+                        TrpNo = Convert.ToInt32(dumpExist.tripNo);
                     }
                 }
                 
                
                 if (dump != null)
                 {
-                    dump.dyid = db.DumpYardDetails.Where(a=>a.ReferanceId==obj.dyId).Select(a=>a.ReferanceId).FirstOrDefault();
-                    dump.enddatetime = Convert.ToDateTime(obj.gcDate);
-                    dump.userid = obj.userId;
+                    dump.dyId = db.DumpYardDetails.Where(a=>a.ReferanceId==obj.dyId).Select(a=>a.ReferanceId).FirstOrDefault();
+                    dump.endDateTime = Convert.ToDateTime(obj.gcDate);
+                    dump.userId = obj.userId;
                   
                   
                     dump.totalDryWeight = obj.totalDryWeight;
                     dump.totalWetWeight = obj.totalWetWeight;
                     dump.totalGcWeight = obj.totalGcWeight;
-                    dump.tripno = TrpNo;
+                    dump.tripNo = TrpNo;
                     db.SaveChanges();
                 }
                 try
@@ -6819,7 +6820,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                     result.houselist = hlist;
                                     result.dyid = obj.dyId;
                                     result.vehicleNumber = obj.vehicleNumber;
-                                    result.startdatetime = dumpExist.startdatetime;
+                                    result.startdatetime = dumpExist.startDateTime;
                                     result.enddatetime = Convert.ToDateTime(obj.gcDate);
                                     return result;
                                 }
@@ -6904,7 +6905,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         result.houselist = hlist;
                         result.dyid = obj.dyId;
                         result.vehicleNumber = obj.vehicleNumber;
-                        result.startdatetime = dumpExist.startdatetime;
+                        result.startdatetime = dumpExist.startDateTime;
                         result.enddatetime = Convert.ToDateTime(obj.gcDate);
 
                         //string mes = "नमस्कार! आपल्या घरून कचरा संकलित करण्यात आलेला आहे. कृपया ओला व सुका असा वर्गीकृत केलेला कचरा सफाई कर्मचाऱ्यास सुपूर्द करून सहकार्य करावे धन्यवाद. " + appdetails.yoccContact + " आपल्या सेवेशी " + appdetails.AppName_mar + "";
@@ -7033,7 +7034,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         result.houselist = hlist;
                         result.dyid = obj.dyId;
                         result.vehicleNumber = obj.vehicleNumber;
-                        result.startdatetime = dumpExist.startdatetime;
+                        result.startdatetime = dumpExist.startDateTime;
                         result.enddatetime = Convert.ToDateTime(obj.gcDate);
 
                         //string mes = "नमस्कार! आपल्या घरून कचरा संकलित करण्यात आलेला आहे. कृपया ओला व सुका असा वर्गीकृत केलेला कचरा सफाई कर्मचाऱ्यास सुपूर्द करून सहकार्य करावे धन्यवाद. " + appdetails.yoccContact + " आपल्या सेवेशी " + appdetails.AppName_mar + "";

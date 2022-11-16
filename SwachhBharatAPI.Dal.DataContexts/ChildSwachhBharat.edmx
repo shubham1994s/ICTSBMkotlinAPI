@@ -57,15 +57,16 @@
         </EntityType>
         <EntityType Name="DumpTripDetails">
           <Key>
-            <PropertyRef Name="tripid" />
+            <PropertyRef Name="tripId" />
           </Key>
-          <Property Name="tripid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="startdatetime" Type="datetime" />
-          <Property Name="enddatetime" Type="datetime" />
-          <Property Name="userid" Type="int" />
-          <Property Name="dyid" Type="nvarchar" MaxLength="100" />
-          <Property Name="houselist" Type="nvarchar(max)" />
-          <Property Name="tripno" Type="int" />
+          <Property Name="tripId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="transId" Type="nvarchar" MaxLength="100" />
+          <Property Name="startDateTime" Type="datetime" />
+          <Property Name="endDateTime" Type="datetime" />
+          <Property Name="userId" Type="int" />
+          <Property Name="dyId" Type="nvarchar" MaxLength="100" />
+          <Property Name="houseList" Type="nvarchar(max)" />
+          <Property Name="tripNo" Type="int" />
           <Property Name="vehicleNumber" Type="nvarchar" MaxLength="100" />
           <Property Name="totalGcWeight" Type="decimal" Precision="18" Scale="4" />
           <Property Name="totalDryWeight" Type="decimal" Precision="18" Scale="4" />
@@ -1906,15 +1907,16 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
         </EntityType>
         <EntityType Name="DumpTripDetail">
           <Key>
-            <PropertyRef Name="tripid" />
+            <PropertyRef Name="tripId" />
           </Key>
-          <Property Name="tripid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="startdatetime" Type="DateTime" Precision="3" />
-          <Property Name="enddatetime" Type="DateTime" Precision="3" />
-          <Property Name="userid" Type="Int32" />
-          <Property Name="dyid" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="houselist" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="tripno" Type="Int32" />
+          <Property Name="tripId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="transId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="startDateTime" Type="DateTime" Precision="3" />
+          <Property Name="endDateTime" Type="DateTime" Precision="3" />
+          <Property Name="userId" Type="Int32" />
+          <Property Name="dyId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="houseList" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="tripNo" Type="Int32" />
           <Property Name="vehicleNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="totalGcWeight" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="totalDryWeight" Type="Decimal" Precision="18" Scale="4" />
@@ -2996,13 +2998,14 @@ warning 6002: The table/view 'LIVEAdvanceDevSwachhBharatNagpur.dbo.Vw_MsgNotific
                 <ScalarProperty Name="totalDryWeight" ColumnName="totalDryWeight" />
                 <ScalarProperty Name="totalGcWeight" ColumnName="totalGcWeight" />
                 <ScalarProperty Name="vehicleNumber" ColumnName="vehicleNumber" />
-                <ScalarProperty Name="tripno" ColumnName="tripno" />
-                <ScalarProperty Name="houselist" ColumnName="houselist" />
-                <ScalarProperty Name="dyid" ColumnName="dyid" />
-                <ScalarProperty Name="userid" ColumnName="userid" />
-                <ScalarProperty Name="enddatetime" ColumnName="enddatetime" />
-                <ScalarProperty Name="startdatetime" ColumnName="startdatetime" />
-                <ScalarProperty Name="tripid" ColumnName="tripid" />
+                <ScalarProperty Name="tripNo" ColumnName="tripNo" />
+                <ScalarProperty Name="houseList" ColumnName="houseList" />
+                <ScalarProperty Name="dyId" ColumnName="dyId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="endDateTime" ColumnName="endDateTime" />
+                <ScalarProperty Name="startDateTime" ColumnName="startDateTime" />
+                <ScalarProperty Name="transId" ColumnName="transId" />
+                <ScalarProperty Name="tripId" ColumnName="tripId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
