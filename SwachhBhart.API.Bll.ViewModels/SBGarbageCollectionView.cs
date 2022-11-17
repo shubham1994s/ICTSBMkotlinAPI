@@ -44,6 +44,8 @@ namespace SwachhBhart.API.Bll.ViewModels
 
         public bool IsIn { get; set; }
 
+
+
     }
 
     public class SBGarbageCollectionChildView

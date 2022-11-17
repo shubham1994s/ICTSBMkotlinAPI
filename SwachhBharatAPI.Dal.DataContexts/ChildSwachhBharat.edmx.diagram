@@ -39,6 +39,7 @@
         <EntityTypeShape EntityType="DevSwachhBharatNagpurModel.LiquidWasteDetail" Width="1.5" PointX="7.75" PointY="18.75" />
         <EntityTypeShape EntityType="DevSwachhBharatNagpurModel.StreetSweepingDetail" Width="1.5" PointX="19.75" PointY="7.75" />
         <EntityTypeShape EntityType="DevSwachhBharatNagpurModel.DumpTripDetail" Width="1.5" PointX="10.375" PointY="19.75" />
+        <EntityTypeShape EntityType="DevSwachhBharatNagpurModel.DumpTripDetailM" Width="1.5" PointX="19.375" PointY="15.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

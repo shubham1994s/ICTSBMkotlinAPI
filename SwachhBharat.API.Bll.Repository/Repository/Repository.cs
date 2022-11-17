@@ -6812,16 +6812,16 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                                     result.status = "success";
                                     result.message = "Uploaded successfully";
                                     result.messageMar = "सबमिट यशस्वी";
-                                    result.totalDryWeight = obj.totalDryWeight;
-                                    result.totalWetWeight = obj.totalWetWeight;
-                                    result.totalGcWeight = obj.totalGcWeight;
-                                    result.tripno= TrpNo;
-                                    result.userid = obj.userId;
-                                    result.houselist = hlist;
-                                    result.dyid = obj.dyId;
-                                    result.vehicleNumber = obj.vehicleNumber;
-                                    result.startdatetime = dumpExist.startDateTime;
-                                    result.enddatetime = Convert.ToDateTime(obj.gcDate);
+                                    //result.totalDryWeight = obj.totalDryWeight;
+                                    //result.totalWetWeight = obj.totalWetWeight;
+                                    //result.totalGcWeight = obj.totalGcWeight;
+                                    //result.tripno= TrpNo;
+                                    //result.userid = obj.userId;
+                                    //result.houselist = hlist;
+                                    //result.dyid = obj.dyId;
+                                    //result.vehicleNumber = obj.vehicleNumber;
+                                    //result.startdatetime = dumpExist.startDateTime;
+                                    //result.enddatetime = Convert.ToDateTime(obj.gcDate);
                                     return result;
                                 }
                             }
@@ -6897,16 +6897,16 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         result.status = "success";
                         result.message = "Uploaded successfully";
                         result.messageMar = "सबमिट यशस्वी";
-                        result.totalDryWeight = obj.totalDryWeight;
-                        result.totalWetWeight = obj.totalWetWeight;
-                        result.totalGcWeight = obj.totalGcWeight;
-                        result.tripno = TrpNo;
-                        result.userid = obj.userId;
-                        result.houselist = hlist;
-                        result.dyid = obj.dyId;
-                        result.vehicleNumber = obj.vehicleNumber;
-                        result.startdatetime = dumpExist.startDateTime;
-                        result.enddatetime = Convert.ToDateTime(obj.gcDate);
+                        //result.totalDryWeight = obj.totalDryWeight;
+                        //result.totalWetWeight = obj.totalWetWeight;
+                        //result.totalGcWeight = obj.totalGcWeight;
+                        //result.tripno = TrpNo;
+                        //result.userid = obj.userId;
+                        //result.houselist = hlist;
+                        //result.dyid = obj.dyId;
+                        //result.vehicleNumber = obj.vehicleNumber;
+                        //result.startdatetime = dumpExist.startDateTime;
+                        //result.enddatetime = Convert.ToDateTime(obj.gcDate);
 
                         //string mes = "नमस्कार! आपल्या घरून कचरा संकलित करण्यात आलेला आहे. कृपया ओला व सुका असा वर्गीकृत केलेला कचरा सफाई कर्मचाऱ्यास सुपूर्द करून सहकार्य करावे धन्यवाद. " + appdetails.yoccContact + " आपल्या सेवेशी " + appdetails.AppName_mar + "";
                         //if (housemob != "")
@@ -7026,16 +7026,16 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         result.status = "success";
                         result.message = "Uploaded successfully";
                         result.messageMar = "सबमिट यशस्वी";
-                        result.totalDryWeight = obj.totalDryWeight;
-                        result.totalWetWeight = obj.totalWetWeight;
-                        result.totalGcWeight = obj.totalGcWeight;
-                        result.tripno = TrpNo;
-                        result.userid = obj.userId;
-                        result.houselist = hlist;
-                        result.dyid = obj.dyId;
-                        result.vehicleNumber = obj.vehicleNumber;
-                        result.startdatetime = dumpExist.startDateTime;
-                        result.enddatetime = Convert.ToDateTime(obj.gcDate);
+                        //result.totalDryWeight = obj.totalDryWeight;
+                        //result.totalWetWeight = obj.totalWetWeight;
+                        //result.totalGcWeight = obj.totalGcWeight;
+                        //result.tripno = TrpNo;
+                        //result.userid = obj.userId;
+                        //result.houselist = hlist;
+                        //result.dyid = obj.dyId;
+                        //result.vehicleNumber = obj.vehicleNumber;
+                        //result.startdatetime = dumpExist.startDateTime;
+                        //result.enddatetime = Convert.ToDateTime(obj.gcDate);
 
                         //string mes = "नमस्कार! आपल्या घरून कचरा संकलित करण्यात आलेला आहे. कृपया ओला व सुका असा वर्गीकृत केलेला कचरा सफाई कर्मचाऱ्यास सुपूर्द करून सहकार्य करावे धन्यवाद. " + appdetails.yoccContact + " आपल्या सेवेशी " + appdetails.AppName_mar + "";
                         //if (housemob != "")

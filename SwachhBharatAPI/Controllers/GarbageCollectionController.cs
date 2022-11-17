@@ -406,16 +406,16 @@ namespace SwachhBharatAPI.Controllers
                         messageMar = detail.messageMar,
                         message = detail.message,
                         isAttendenceOff = detail.isAttendenceOff,
-                        totalDryWeight = detail.totalDryWeight,
-                        totalWetWeight = detail.totalWetWeight,
-                        totalGcWeight = detail.totalGcWeight,
-                        tripno = detail.tripno,
-                        userid = detail.userid,
-                        houselist = detail.houselist,
-                        dyid = detail.dyid,
-                        vehicleNumber = detail.vehicleNumber,
-                        startdatetime = detail.startdatetime,
-                        enddatetime = detail.enddatetime
+                        //totalDryWeight = detail.totalDryWeight,
+                        //totalWetWeight = detail.totalWetWeight,
+                        //totalGcWeight = detail.totalGcWeight,
+                        //tripno = detail.tripno,
+                        //userid = detail.userid,
+                        //houselist = detail.houselist,
+                        //dyid = detail.dyid,
+                        //vehicleNumber = detail.vehicleNumber,
+                        //startdatetime = detail.startdatetime,
+                        //enddatetime = detail.enddatetime
 
                     });
                 }
