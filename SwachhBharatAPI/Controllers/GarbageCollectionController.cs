@@ -448,5 +448,54 @@ namespace SwachhBharatAPI.Controllers
 
             return objres;
         }
+        [HttpPost]
+        [Route("Save/DumpyardTrip")]
+        public List<CollectionSyncResult> SaveDumpyardTrip(List<DumpTripVM> objRaw)
+        {
+            _RepositoryApi = new Repository();
+            DumpTripVM gcDetail = new DumpTripVM();
+            List<CollectionSyncResult> objres = new List<CollectionSyncResult>();
+            List<CollectionSyncResult> objDetail = new List<CollectionSyncResult>();
+            try
+            { 
+            foreach (var item in objRaw)
+            {
+                DumpTripVM objDetailDump = new DumpTripVM();
+                    gcDetail.transId = item.transId;
+                    gcDetail.dyId = item.dyId;
+                gcDetail.startDateTime = item.startDateTime;
+                gcDetail.endDateTime = item.endDateTime;
+                gcDetail.userId = item.userId;
+                gcDetail.houseList = item.houseList;
+                gcDetail.tripNo = item.tripNo;
+                gcDetail.vehicleNumber = item.vehicleNumber;
+                    gcDetail.totalDryWeight = item.totalDryWeight;
+                    gcDetail.totalWetWeight = item.totalWetWeight;
+                    gcDetail.totalGcWeight = item.totalGcWeight;
+                    CollectionSyncResult detail = _RepositoryApi.SaveDumpyardTripCollection(gcDetail);
+                objres.Add(new CollectionSyncResult()
+                    {
+                        ID = detail.ID,
+                        status = detail.status,
+                        messageMar = detail.messageMar,
+                        message = detail.message,
+                        isAttendenceOff = detail.isAttendenceOff,
+                      
+                    });
+                }
+            }
+            catch(Exception ex)
+            {
+                objres.Add(new CollectionSyncResult()
+                {
+                    status = "error",
+                    message = "Something is wrong,Try Again.. ",
+                    messageMar = "काहीतरी चुकीचे आहे, पुन्हा प्रयत्न करा..",
+                });
+                return objres;
+            }
+            return objres;
+        }
+
     }
 }

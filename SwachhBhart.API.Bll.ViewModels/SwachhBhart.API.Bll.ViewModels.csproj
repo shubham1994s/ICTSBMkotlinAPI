@@ -78,6 +78,7 @@
     <Compile Include="CMSB\CMSBEmplyeeIdelGrid.cs" />
     <Compile Include="CMSB\CMSBEmpolyeeSummaryGrid.cs" />
     <Compile Include="CollectionResult.cs" />
+    <Compile Include="DumpTripVM.cs" />
     <Compile Include="DumpYardPointDetailsVM.cs" />
     <Compile Include="EmployeeVM.cs" />
     <Compile Include="Games\SBGameAnswerTypeVM.cs" />

@@ -441,7 +441,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>9624</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:9634/</IISUrl>
+          <IISUrl>http://localhost:9634/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:9634/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -9275,6 +9275,72 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
         }
 
+        public CollectionSyncResult SaveDumpyardTripCollection(DumpTripVM obj)
+        {
+            int AppId = 3098;
+            AppDetail objmain = dbMain.AppDetails.Where(x => x.AppId == AppId).FirstOrDefault();
+            CollectionSyncResult result = new CollectionSyncResult();
+            using (DevSwachhBharatNagpurEntities db = new DevSwachhBharatNagpurEntities(AppId))
+            {
+                DumpTripDetailM objdump = new DumpTripDetailM();
+                DateTime Dateeee = Convert.ToDateTime(obj.endDateTime);
+                var dump = db.DumpTripDetailMs.Where(c => EntityFunctions.TruncateTime(c.endDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId == obj.dyId).FirstOrDefault();
+      
+                try
+                { 
+                if (dump == null)
+                {
+                        objdump.transId = obj.transId;
+                        objdump.dyId = obj.dyId;
+                    objdump.startDateTime = Convert.ToDateTime(obj.startDateTime);
+                    objdump.endDateTime = Convert.ToDateTime(obj.endDateTime);
+                    objdump.userId = obj.userId;
+                    objdump.houseList = obj.houseList;
+                    objdump.tripNo = obj.tripNo;
+                    objdump.vehicleNumber = obj.vehicleNumber;
+                        objdump.totalDryWeight = obj.totalDryWeight;
+                        objdump.totalWetWeight = obj.totalWetWeight;
+                        objdump.totalGcWeight = obj.totalGcWeight;
+                        db.DumpTripDetailMs.Add(objdump);
+                    db.SaveChanges();
+                        result.ID = 1;
+                        result.status = "success";
+                        result.message = "Uploaded successfully";
+                        result.messageMar = "सबमिट यशस्वी";
+                    }
+                else
+                {
+                    dump.transId = obj.transId;
+                    dump.dyId = obj.dyId;
+                    dump.startDateTime = Convert.ToDateTime(obj.startDateTime);
+                    dump.endDateTime = Convert.ToDateTime(obj.endDateTime);
+                    dump.userId = obj.userId;
+                    dump.houseList = obj.houseList;
+                    dump.tripNo = obj.tripNo;
+                    dump.vehicleNumber = obj.vehicleNumber;
+                    dump.totalDryWeight = obj.totalDryWeight;
+                    dump.totalWetWeight = obj.totalWetWeight;
+                    dump.totalGcWeight = obj.totalGcWeight;
+                        db.SaveChanges();
+                    result.ID = 1;
+                    result.status = "success";
+                    result.message = "Uploaded successfully";
+                    result.messageMar = "सबमिट यशस्वी";
+                    }
+                }
+                catch(Exception ex)
+                {
+                    result.isAttendenceOff = true;
+                    result.message = ex.Message;
+                    result.messageMar = ex.Message;
+                    result.status = "Error";
+                    result.ID = 0;
+                }
+            }
+            return result;
+
+        }
+
         public List<SBUserAttendenceView> GetUserAttendence(DateTime fDate, int appId, int userId)
         {
             List<SBUserAttendenceView> obj = new List<SBUserAttendenceView>();
