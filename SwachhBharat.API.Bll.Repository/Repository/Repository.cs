@@ -579,7 +579,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         user.gtFeatures = objmain.NewFeatures;
                         user.status = "success"; user.message = "Login Successfully"; user.messageMar = "लॉगिन यशस्वी";
                     }
-                   
+
                     else
                     {
                         if (obj.imoNo == imi)
@@ -594,7 +594,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                             user.gtFeatures = objmain.NewFeatures;
                             user.status = "success"; user.message = "Login Successfully"; user.messageMar = "लॉगिन यशस्वी";
                         }
-                       
+
                         else
                         {
                             user.userId = 0;
@@ -624,7 +624,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     user.message = "UserName or Passward not Match.";
                     user.messageMar = "वापरकर्ता नाव किंवा पासवर्ड जुळत नाही.";
                 }
-               
+
                 else if (objEmpMst != null && objEmpMst.qrEmpLoginId == userName && objEmpMst.qrEmpPassword == password)
                 {
 
@@ -688,7 +688,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                     }
                 }
-                
+
                 else
                 {
                     var objEmpMst1 = db.QrEmployeeMasters.Where(c => c.qrEmpLoginId == userName & c.qrEmpPassword == password).FirstOrDefault();
@@ -5826,10 +5826,10 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 {
                     DumpTripDetail objdump = new DumpTripDetail();
                     DateTime Dateeee = Convert.ToDateTime(obj.gcDate);
-                    var dump = db.DumpTripDetails.Where(c=> EntityFunctions.TruncateTime(c.startDateTime)==EntityFunctions.TruncateTime(Dateeee) && c.userId==obj.userId && c.dyId ==null).FirstOrDefault();
-                    var dumpExist= db.DumpTripDetails.OrderByDescending(x => x.tripId).Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId != null).FirstOrDefault();
-                    
-                    int TrpNo=0;
+                    var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId == null).FirstOrDefault();
+                    var dumpExist = db.DumpTripDetails.OrderByDescending(x => x.tripId).Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId != null).FirstOrDefault();
+
+                    int TrpNo = 0;
                     if (dumpExist == null)
                     {
                         TrpNo = 1;
@@ -5838,7 +5838,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     {
                         TrpNo = (Convert.ToInt32(dumpExist.tripNo) + 1);
                     }
-                    
+
                     if (dump == null)
                     {
                         objdump.dyId = null;
@@ -5849,7 +5849,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         objdump.tripNo = TrpNo;
                         objdump.vehicleNumber = obj.vehicleNumber;
                         Guid guid = Guid.NewGuid();
-                        var gid= guid.ToString();
+                        var gid = guid.ToString();
                         db.DumpTripDetails.Add(objdump);
                         db.SaveChanges();
                     }
@@ -5859,13 +5859,13 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                         dump.endDateTime = Convert.ToDateTime(obj.gcDate);
                         dump.userId = obj.userId;
-                        var phl = db.DumpTripDetails.Where(a=>a.userId==obj.userId && a.tripNo== TrpNo && a.dyId==null && EntityFunctions.TruncateTime(a.startDateTime) == EntityFunctions.TruncateTime(Dateeee)).Select(a=>a.houseList).FirstOrDefault();
-                       
-                        var tripid = db.DumpTripDetails.OrderByDescending(a=>a.tripId).Where(a=>a.userId==obj.userId).FirstOrDefault().tripId;
+                        var phl = db.DumpTripDetails.Where(a => a.userId == obj.userId && a.tripNo == TrpNo && a.dyId == null && EntityFunctions.TruncateTime(a.startDateTime) == EntityFunctions.TruncateTime(Dateeee)).Select(a => a.houseList).FirstOrDefault();
+
+                        var tripid = db.DumpTripDetails.OrderByDescending(a => a.tripId).Where(a => a.userId == obj.userId).FirstOrDefault().tripId;
                         var data = db.DumpTripDetails.Where(a => a.houseList.Contains(obj.houseId) && a.tripId == tripid).FirstOrDefault();
-                        if(data==null)
-                        { 
-                        dump.houseList = phl+","+obj.houseId;
+                        if (data == null)
+                        {
+                            dump.houseList = phl + "," + obj.houseId;
                         }
                         dump.vehicleNumber = obj.vehicleNumber;
                         dump.tripNo = TrpNo;
@@ -5886,7 +5886,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     {
 
                         //bool IsExist = false;
-                        
+
                         DateTime startDateTime = new DateTime(Dateeee.Year, Dateeee.Month, Dateeee.Day, 00, 00, 00, 000);
                         DateTime endDateTime = new DateTime(Dateeee.Year, Dateeee.Month, Dateeee.Day, 23, 59, 59, 999);
                         var IsSameHouseRecord = db.GarbageCollectionDetails.Where(c => c.userId == obj.userId && c.houseId == house.houseId && c.gcDate == Dateeee).FirstOrDefault();
@@ -6435,7 +6435,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         }
                     }
 
-                   
+
                 }
             }
             //}
@@ -6722,7 +6722,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
 
                 //var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startdatetime) == EntityFunctions.TruncateTime(Dateeee) && c.userid == obj.userId).FirstOrDefault();
                 var dump = db.DumpTripDetails.Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId == null).FirstOrDefault();
-                var dumpExist = db.DumpTripDetails.OrderByDescending(x=>x.tripId).Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId != null).FirstOrDefault();
+                var dumpExist = db.DumpTripDetails.OrderByDescending(x => x.tripId).Where(c => EntityFunctions.TruncateTime(c.startDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId != null).FirstOrDefault();
                 int TrpNo = 0;
                 string hlist = "", sdate = "";
                 if (dumpExist == null)
@@ -6732,7 +6732,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                 else
                 {
                     TrpNo = (Convert.ToInt32(dumpExist.tripNo) + 1);
-                    if(dumpExist.dyId!=null)
+                    if (dumpExist.dyId != null)
                     {
                         TrpNo = Convert.ToInt32(dumpExist.tripNo);
 
@@ -6746,15 +6746,15 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                         TrpNo = Convert.ToInt32(dumpExist.tripNo);
                     }
                 }
-                
-               
+
+
                 if (dump != null)
                 {
-                    dump.dyId = db.DumpYardDetails.Where(a=>a.ReferanceId==obj.dyId).Select(a=>a.ReferanceId).FirstOrDefault();
+                    dump.dyId = db.DumpYardDetails.Where(a => a.ReferanceId == obj.dyId).Select(a => a.ReferanceId).FirstOrDefault();
                     dump.endDateTime = Convert.ToDateTime(obj.gcDate);
                     dump.userId = obj.userId;
-                  
-                  
+
+
                     dump.totalDryWeight = obj.totalDryWeight;
                     dump.totalWetWeight = obj.totalWetWeight;
                     dump.totalGcWeight = obj.totalGcWeight;
@@ -9284,51 +9284,54 @@ namespace SwachhBharat.API.Bll.Repository.Repository
             {
                 DumpTripDetailM objdump = new DumpTripDetailM();
                 DateTime Dateeee = Convert.ToDateTime(obj.endDateTime);
-                var dump = db.DumpTripDetailMs.Where(c => EntityFunctions.TruncateTime(c.endDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.dyId == obj.dyId).FirstOrDefault();
-      
+                var dump = db.DumpTripDetailMs.Where(c => EntityFunctions.TruncateTime(c.endDateTime) == EntityFunctions.TruncateTime(Dateeee) && c.userId == obj.userId && c.transId == obj.transId).FirstOrDefault();
+
                 try
-                { 
-                if (dump == null)
                 {
+
+                    if (dump == null)
+                    {
                         objdump.transId = obj.transId;
                         objdump.dyId = obj.dyId;
-                    objdump.startDateTime = Convert.ToDateTime(obj.startDateTime);
-                    objdump.endDateTime = Convert.ToDateTime(obj.endDateTime);
-                    objdump.userId = obj.userId;
-                    objdump.houseList = obj.houseList;
-                    objdump.tripNo = obj.tripNo;
-                    objdump.vehicleNumber = obj.vehicleNumber;
+                        objdump.startDateTime = Convert.ToDateTime(obj.startDateTime);
+                        objdump.endDateTime = Convert.ToDateTime(obj.endDateTime);
+                        objdump.userId = obj.userId;
+                        objdump.houseList = obj.houseList;
+                        objdump.tripNo = obj.tripNo;
+                        objdump.vehicleNumber = obj.vehicleNumber;
                         objdump.totalDryWeight = obj.totalDryWeight;
                         objdump.totalWetWeight = obj.totalWetWeight;
                         objdump.totalGcWeight = obj.totalGcWeight;
                         db.DumpTripDetailMs.Add(objdump);
-                    db.SaveChanges();
+                        db.SaveChanges();
                         result.ID = 1;
                         result.status = "success";
                         result.message = "Uploaded successfully";
                         result.messageMar = "सबमिट यशस्वी";
                     }
-                else
-                {
-                    dump.transId = obj.transId;
-                    dump.dyId = obj.dyId;
-                    dump.startDateTime = Convert.ToDateTime(obj.startDateTime);
-                    dump.endDateTime = Convert.ToDateTime(obj.endDateTime);
-                    dump.userId = obj.userId;
-                    dump.houseList = obj.houseList;
-                    dump.tripNo = obj.tripNo;
-                    dump.vehicleNumber = obj.vehicleNumber;
-                    dump.totalDryWeight = obj.totalDryWeight;
-                    dump.totalWetWeight = obj.totalWetWeight;
-                    dump.totalGcWeight = obj.totalGcWeight;
+                    else
+                    {
+                        dump.transId = obj.transId;
+                        dump.dyId = obj.dyId;
+                        dump.startDateTime = Convert.ToDateTime(obj.startDateTime);
+                        dump.endDateTime = Convert.ToDateTime(obj.endDateTime);
+                        dump.userId = obj.userId;
+                        dump.houseList = obj.houseList;
+                        dump.tripNo = obj.tripNo;
+                        dump.vehicleNumber = obj.vehicleNumber;
+                        dump.totalDryWeight = obj.totalDryWeight;
+                        dump.totalWetWeight = obj.totalWetWeight;
+                        dump.totalGcWeight = obj.totalGcWeight;
                         db.SaveChanges();
-                    result.ID = 1;
-                    result.status = "success";
-                    result.message = "Uploaded successfully";
-                    result.messageMar = "सबमिट यशस्वी";
+                        result.ID = 1;
+                        result.status = "success";
+                        result.message = "Uploaded successfully";
+                        result.messageMar = "सबमिट यशस्वी";
                     }
                 }
-                catch(Exception ex)
+
+
+                catch (Exception ex)
                 {
                     result.isAttendenceOff = true;
                     result.message = ex.Message;

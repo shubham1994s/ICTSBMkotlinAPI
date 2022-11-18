@@ -457,34 +457,34 @@ namespace SwachhBharatAPI.Controllers
             List<CollectionSyncResult> objres = new List<CollectionSyncResult>();
             List<CollectionSyncResult> objDetail = new List<CollectionSyncResult>();
             try
-            { 
-            foreach (var item in objRaw)
             {
-                DumpTripVM objDetailDump = new DumpTripVM();
+                foreach (var item in objRaw)
+                {
+                    DumpTripVM objDetailDump = new DumpTripVM();
                     gcDetail.transId = item.transId;
                     gcDetail.dyId = item.dyId;
-                gcDetail.startDateTime = item.startDateTime;
-                gcDetail.endDateTime = item.endDateTime;
-                gcDetail.userId = item.userId;
-                gcDetail.houseList = item.houseList;
-                gcDetail.tripNo = item.tripNo;
-                gcDetail.vehicleNumber = item.vehicleNumber;
+                    gcDetail.startDateTime = item.startDateTime;
+                    gcDetail.endDateTime = item.endDateTime;
+                    gcDetail.userId = item.userId;
+                    gcDetail.houseList = item.houseList;
+                    gcDetail.tripNo = item.tripNo;
+                    gcDetail.vehicleNumber = item.vehicleNumber;
                     gcDetail.totalDryWeight = item.totalDryWeight;
                     gcDetail.totalWetWeight = item.totalWetWeight;
                     gcDetail.totalGcWeight = item.totalGcWeight;
                     CollectionSyncResult detail = _RepositoryApi.SaveDumpyardTripCollection(gcDetail);
-                objres.Add(new CollectionSyncResult()
+                    objres.Add(new CollectionSyncResult()
                     {
                         ID = detail.ID,
                         status = detail.status,
                         messageMar = detail.messageMar,
                         message = detail.message,
                         isAttendenceOff = detail.isAttendenceOff,
-                      
+
                     });
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 objres.Add(new CollectionSyncResult()
                 {

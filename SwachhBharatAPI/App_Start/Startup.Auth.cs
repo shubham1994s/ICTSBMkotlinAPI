@@ -68,7 +68,7 @@ namespace SwachhBharatAPI
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(2),
                 // In production mode set AllowInsecureHttp = false
-                AllowInsecureHttp = true
+                AllowInsecureHttp = false
             };
 
             // Enable the application to use bearer tokens to authenticate users
