@@ -36,7 +36,7 @@ namespace SwachhBharatAPI.Providers
             var data = dbMain.AspNetUsers.Where(c => c.Id == Appiddata.UserId).FirstOrDefault();
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
            
-            ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
+            ApplicationUser user = await userManager.FindAsync(data.UserName, data.PasswordString);
 
             if (user == null)
             {
