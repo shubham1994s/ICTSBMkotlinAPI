@@ -2,6 +2,7 @@
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using SwachhBharatAPI.Dal.DataContexts;
 using SwachhBharatAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace SwachhBharatAPI.Providers
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {
         private readonly string _publicClientId;
+        public DevSwachhBharatMainEntities dbMain = new DevSwachhBharatMainEntities();
 
         public ApplicationOAuthProvider(string publicClientId)
         {
@@ -28,8 +30,12 @@ namespace SwachhBharatAPI.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
 
+
+            var Appiddata = dbMain.UserInApps.Where(x => x.AppId.ToString() == (context.UserName)).FirstOrDefault();
+            var data = dbMain.AspNetUsers.Where(c => c.Id == Appiddata.UserId).FirstOrDefault();
+            var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
+           
             ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
 
             if (user == null)
