@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace SwachhBharatAPI.Controllers
 {
+ 
     [RoutePrefix("api/Account")]
     public class LoginController : ApiController
     {
@@ -16,7 +17,7 @@ namespace SwachhBharatAPI.Controllers
 
         // GET: api/users
 
-        //[Authorize]
+       // [Authorize]
         [Route("Login")]
         [HttpPost]
         public SBUser GetLogin(SBUser objlogin)
