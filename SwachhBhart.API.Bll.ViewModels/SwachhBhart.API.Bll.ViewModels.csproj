@@ -117,6 +117,7 @@
     <Compile Include="SBWorkDetails.cs" />
     <Compile Include="SBWorkDetailsHistory.cs" />
     <Compile Include="SyncResult.cs" />
+    <Compile Include="Trial.cs" />
     <Compile Include="UserRoleDetails.cs" />
     <Compile Include="VehicleList.cs" />
     <Compile Include="WasteManagement\GarbageCategoryVM.cs" />
