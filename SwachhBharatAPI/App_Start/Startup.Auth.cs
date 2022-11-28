@@ -68,7 +68,9 @@ namespace SwachhBharatAPI
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(2),
                 // In production mode set AllowInsecureHttp = false
-                AccessTokenFormat = new CustomJwtFormat("http://jwtauthzsrv.azurewebsites.net"),
+                // AccessTokenFormat = new CustomJwtFormat("http://jwtauthzsrv.azurewebsites.net"),
+               // AccessTokenFormat = new CustomJwtFormat(" https://jwt.io/"),
+               
                 AllowInsecureHttp = true
             };
 

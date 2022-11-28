@@ -13,7 +13,32 @@ namespace SwachhBharatAPI
         private const string AudiencePropertyKey = "userName";
 
         private readonly string _issuer = string.Empty;
-       
+
+
+        private readonly Func<AuthenticationTicket> _contextGetter;
+        private string _sIssuer;
+        public const string AUDIENCE_PROPKEY = "audience";
+
+        private const string SIGNATURE_ALGORITHM = "http://www.w3.org/2001/04/xmldsig-more#hmac-sha256";
+        private const string DIGEST_ALGORITHM = "http://www.w3.org/2001/04/xmlenc#sha256";
+
+        public string Issuer
+        {
+            get { return _sIssuer; }
+            set
+            {
+                if (value == null) throw new ArgumentNullException("value");
+                _sIssuer = value;
+            }
+        }
+
+        public CustomJwtFormat(Func<AuthenticationTicket> contextGetter)
+        {
+            if (contextGetter == null) throw new ArgumentNullException("contextGetter");
+
+            _contextGetter = contextGetter;
+            Issuer = "https://localhost:44334/";
+        }
         public CustomJwtFormat(string issuer)
         {
             _issuer = issuer;
@@ -46,7 +71,12 @@ namespace SwachhBharatAPI
             var issued = data.Properties.IssuedUtc;
             var expires = data.Properties.ExpiresUtc;
 
-            var token = new JwtSecurityToken(_issuer, audienceId, data.Identity.Claims, issued.Value.UtcDateTime, expires.Value.UtcDateTime, signingKey);
+            SigningCredentials credentials = new SigningCredentials(
+         new InMemorySymmetricSecurityKey(keyByteArray),
+         SIGNATURE_ALGORITHM,
+         DIGEST_ALGORITHM);
+
+            var token = new JwtSecurityToken(_issuer, audienceId, data.Identity.Claims, issued.Value.UtcDateTime, expires.Value.UtcDateTime,  credentials);
 
             var handler = new JwtSecurityTokenHandler();
 
@@ -57,7 +87,11 @@ namespace SwachhBharatAPI
 
         public AuthenticationTicket Unprotect(string protectedText)
         {
-            throw new NotImplementedException();
+           throw new NotImplementedException(protectedText);
+            //   Protect(protectedText);
+            // return "";
+
+            //return ;
         }
     }
 }
