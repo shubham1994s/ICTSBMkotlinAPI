@@ -2,6 +2,7 @@
 using SwachhBharat.API.Bll.Repository.Repository;
 using SwachhBhart.API.Bll.ViewModels;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -71,15 +72,24 @@ namespace SwachhBharatAPI.Controllers
         [Route("Post")]
        
         [HttpPost]
-        public  IHttpActionResult Post([FromBody] Trial obj)
+        public  IHttpActionResult Post([FromBody] List<Trial> obj)
         {
 
-            List<Trial> obj2 = new List<Trial>();
+            TrialNew tn = new TrialNew();
+            foreach (var item in obj)
+            {
+                tn.startTs = item.startTs;
+                tn.endTs = item.endTs;
+                tn.createUser = item.createUser;
+                tn.geom = item.geom;
+            }
+
+                List<Trial> obj2 = new List<Trial>();
             //var values = new Dictionary<string, string>{
             //                                                 obj.
             //                                            };
             HttpClient client = new HttpClient();
-            var json = JsonConvert.SerializeObject(obj, Formatting.Indented);
+            var json = JsonConvert.SerializeObject(tn, Formatting.Indented);
             var stringContent = new StringContent(json);
           
             stringContent.Headers.ContentType.MediaType = "application/json";
@@ -90,8 +100,7 @@ namespace SwachhBharatAPI.Controllers
             var response =  client.PostAsync("http://114.143.244.130:9091/house-map-trail/add", stringContent);
             // var responseString =  response();
 
-            //    var responseString =  response.con.ReadAsStringAsync();
-
+                                                                                                                                                     
             // var res= Ok(responseString);
             //  return responseString;
             HttpResponseMessage rs = response.Result;
@@ -105,6 +114,18 @@ namespace SwachhBharatAPI.Controllers
             return Ok(obj2);
 
         }
+
+        public class TrialNew
+        {
+            public string startTs { get; set; }
+
+            public string endTs { get; set; }
+
+            public string createUser { get; set; }
+
+            public string geom { get; set; }
+        }
+
 
 
     }

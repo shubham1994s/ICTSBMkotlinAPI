@@ -611,8 +611,7 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     }
 
                 }
-
-                else if (obj != null && obj.userLoginId == userName && obj.userPassword != password)
+                else if (obj != null && obj.userLoginId != userName || obj.userPassword != password)
                 {
                     user.userId = 0;
                     user.userLoginId = "";
@@ -623,7 +622,9 @@ namespace SwachhBharat.API.Bll.Repository.Repository
                     user.EmpType = "";
                     user.message = "UserName or Passward not Match.";
                     user.messageMar = "वापरकर्ता नाव किंवा पासवर्ड जुळत नाही.";
+
                 }
+
 
                 else if (objEmpMst != null && objEmpMst.qrEmpLoginId == userName && objEmpMst.qrEmpPassword == password)
                 {
