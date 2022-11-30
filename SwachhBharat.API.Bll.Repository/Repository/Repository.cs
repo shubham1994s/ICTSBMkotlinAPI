@@ -324,9 +324,13 @@ namespace SwachhBharat.API.Bll.Repository.Repository
         {
             try
             {
-                string[] ad = address.Split(',');
-                int l = ad.Length - 4;
-                return ad[l];
+                if (address != null)
+                {
+                    string[] ad = address.Split(',');
+                    int l = ad.Length - 4;
+                    return ad[l];
+                }
+                return "";
             }
             catch
             {

@@ -20,7 +20,9 @@ namespace SwachhBhart.API.Bll.ViewModels
     public class CollectionSyncResult
     {
         public int ID { get; set; }
+
         public string status { get; set; }
+        public string referenceID { get; set; }
         public string message { get; set; }
         public string messageMar { get; set; }
         public bool isAttendenceOff { get; set; }
