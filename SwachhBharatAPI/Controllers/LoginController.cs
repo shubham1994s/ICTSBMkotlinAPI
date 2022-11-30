@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -69,62 +70,8 @@ namespace SwachhBharatAPI.Controllers
         //    return objresponse;
         //}
 
-        [Route("Post")]
-       
-        [HttpPost]
-        public  IHttpActionResult Post([FromBody] List<Trial> obj)
-        {
 
-            TrialNew tn = new TrialNew();
-            foreach (var item in obj)
-            {
-                tn.startTs = item.startTs;
-                tn.endTs = item.endTs;
-                tn.createUser = item.createUser;
-                tn.geom = item.geom;
-            }
 
-                List<Trial> obj2 = new List<Trial>();
-            //var values = new Dictionary<string, string>{
-            //                                                 obj.
-            //                                            };
-            HttpClient client = new HttpClient();
-            var json = JsonConvert.SerializeObject(tn, Formatting.Indented);
-            var stringContent = new StringContent(json);
-          
-            stringContent.Headers.ContentType.MediaType = "application/json";
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-          
-
-            var response =  client.PostAsync("http://114.143.244.130:9091/house-map-trail/add", stringContent);
-            // var responseString =  response();
-
-                                                                                                                                                     
-            // var res= Ok(responseString);
-            //  return responseString;
-            HttpResponseMessage rs = response.Result;
-            
-
-            var responseString = rs.Content.ReadAsStringAsync().Result;
-            obj2 = JsonConvert.DeserializeObject<List<Trial>>(responseString);
-
-           //return View(EmpDetails);
-         //   var rse = responseString.d;
-            return Ok(obj2);
-
-        }
-
-        public class TrialNew
-        {
-            public string startTs { get; set; }
-
-            public string endTs { get; set; }
-
-            public string createUser { get; set; }
-
-            public string geom { get; set; }
-        }
 
 
 
