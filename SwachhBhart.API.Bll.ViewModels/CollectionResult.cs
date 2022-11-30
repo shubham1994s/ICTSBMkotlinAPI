@@ -50,6 +50,17 @@ namespace SwachhBhart.API.Bll.ViewModels
         public string messageMar { get; set; }
     }
 
+
+    public class DumpTripStatusResult
+    {
+        public string code { get; set; }
+        public string status { get; set; }
+        public string message { get; set; }
+        public string errorMessages { get; set; }
+
+        public string timestamp { get; set; }
+        public string data { get; set; }
+    }
     public class CollectionAppAreaLatLong
     {
         public int AppId { get; set; }

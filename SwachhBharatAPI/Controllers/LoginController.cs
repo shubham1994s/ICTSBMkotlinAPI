@@ -9,9 +9,10 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Http;
-
+using System.Web.Script.Serialization;
 
 namespace SwachhBharatAPI.Controllers
 {
@@ -70,8 +71,48 @@ namespace SwachhBharatAPI.Controllers
         //    return objresponse;
         //}
 
+        [Route("Post")]
 
+        [HttpPost]
+        public List<DumpTripStatusResult> Post([FromBody] List<Trial> obj)
+        {
 
+            Trial tn = new Trial();
+            List<DumpTripStatusResult> objres = new List<DumpTripStatusResult>();
+            HttpClient client = new HttpClient();
+            foreach (var item in obj)
+            {
+                tn.startTs = item.startTs;
+                tn.endTs = item.endTs;
+                tn.createUser = item.createUser;
+                tn.geom = item.geom;
+
+                
+                var json = JsonConvert.SerializeObject(tn, Formatting.Indented);
+                var stringContent = new StringContent(json);
+
+                stringContent.Headers.ContentType.MediaType = "application/json";
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = client.PostAsync("http://114.143.244.130:9091/house-map-trail/add", stringContent);
+                HttpResponseMessage rs = response.Result;    
+                var responseString = rs.Content.ReadAsStringAsync().Result;
+                var dynamicobject = JsonConvert.DeserializeObject<dynamic>(responseString);
+                objres.Add(new DumpTripStatusResult()
+                {
+                    code = dynamicobject.code.ToString(),
+                    status = dynamicobject.status.ToString(),
+                    message = dynamicobject.message.ToString(),
+                    errorMessages = dynamicobject.errorMessages.ToString(),
+                    timestamp = dynamicobject.timestamp.ToString(),
+                    data = dynamicobject.data.ToString()
+                });
+
+            }          
+            return objres;
+
+        }
+
+     
 
 
 
