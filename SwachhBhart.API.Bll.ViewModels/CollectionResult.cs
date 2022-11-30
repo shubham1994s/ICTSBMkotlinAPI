@@ -59,7 +59,7 @@ namespace SwachhBhart.API.Bll.ViewModels
         public string errorMessages { get; set; }
 
         public string timestamp { get; set; }
-        public string data { get; set; }
+        public dynamic data { get; set; }
     }
     public class CollectionAppAreaLatLong
     {
