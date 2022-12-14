@@ -92,6 +92,7 @@
     <Compile Include="AHouseGarbageCollectionVM.cs" />
     <Compile Include="HouseScanifyDetailsGridRow.cs" />
     <Compile Include="HouseScanifyEmployeeDetails.cs" />
+    <Compile Include="AddHouse.cs" />
     <Compile Include="HSAttendanceGrid.cs" />
     <Compile Include="HSDashboard.cs" />
     <Compile Include="HSDumpYardDetailsGrid.cs" />

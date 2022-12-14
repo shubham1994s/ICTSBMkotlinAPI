@@ -71,10 +71,10 @@ namespace SwachhBharatAPI.Controllers
         //    return objresponse;
         //}
 
-        [Route("Post")]
+        [Route("HouseTrail")]
 
         [HttpPost]
-        public List<DumpTripStatusResult> Post([FromBody] List<Trial> obj)
+        public List<DumpTripStatusResult> HouseTrail([FromBody] List<Trial> obj)
         {
 
             Trial tn = new Trial();
@@ -85,12 +85,9 @@ namespace SwachhBharatAPI.Controllers
                 tn.startTs = item.startTs;
                 tn.endTs = item.endTs;
                 tn.createUser = item.createUser;
-                tn.geom = item.geom;
-
-                
+                tn.geom = item.geom;             
                 var json = JsonConvert.SerializeObject(tn, Formatting.Indented);
                 var stringContent = new StringContent(json);
-
                 stringContent.Headers.ContentType.MediaType = "application/json";
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var response = client.PostAsync("http://114.143.244.130:9091/house-map-trail/add", stringContent);
@@ -112,7 +109,46 @@ namespace SwachhBharatAPI.Controllers
 
         }
 
-     
+
+        [Route("HouseAdd")]
+
+        [HttpPost]
+        public List<DumpTripStatusResult> HouseAdd([FromBody] List<AddHouse> obj)
+        {
+
+            AddHouse tn = new AddHouse();
+            List<DumpTripStatusResult> objres = new List<DumpTripStatusResult>();
+            HttpClient client = new HttpClient();
+            foreach (var item in obj)
+            {
+                tn.houseId = item.houseId;
+                tn.createUser = item.createUser;
+                tn.geom = item.geom;
+                var json = JsonConvert.SerializeObject(tn, Formatting.Indented);
+                var stringContent = new StringContent(json);
+                stringContent.Headers.ContentType.MediaType = "application/json";
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = client.PostAsync("http://114.143.244.130:9091/house/add", stringContent);
+                HttpResponseMessage rs = response.Result;
+                var responseString = rs.Content.ReadAsStringAsync().Result;
+                var dynamicobject = JsonConvert.DeserializeObject<dynamic>(responseString);
+                var datalist= JsonConvert.DeserializeObject<dynamic>(dynamicobject.data.ToString());
+
+                objres.Add(new DumpTripStatusResult()
+                {
+                    code = dynamicobject.code.ToString(),
+                    status = dynamicobject.status.ToString(),
+                    message = dynamicobject.message.ToString(),
+                    errorMessages = dynamicobject.errorMessages.ToString(),
+                    timestamp = dynamicobject.timestamp.ToString(),
+                    data = datalist
+                });
+
+            }
+            return objres;
+
+        }
+
 
 
 
